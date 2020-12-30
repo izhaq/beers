@@ -1,0 +1,12 @@
+.toggle-container{
+  cursor: pointer;
+  background: transparent;
+  border: none;
+  &:focus{
+    outline: none;
+    background-color: transparent;
+  }
+  i{
+    font-size: 40px;
+  }
+}

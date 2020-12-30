@@ -1,0 +1,23 @@
+.card-browser{
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  .search-container{
+    height: 50px;
+    width: 300px;
+    padding-left: 20px;
+    margin-bottom: 20px;
+    margin-top: 20px;
+  }
+  .cards {
+    height: calc(100% - 90px);
+    overflow: auto;
+    padding-left: 20px;
+    padding-right: 20px;
+    & > div{
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+    }
+  }
+}
