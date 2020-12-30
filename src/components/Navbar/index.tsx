@@ -8,7 +8,7 @@ const Navbar: React.FC = () => (
 			<NavLink to="/" className="brand-logo">
 				Beer Buddy
 			</NavLink>
-			<ul className="right hide-on-med-and-down">
+			<ul className="right">
 				<li cy-data="home-nav-link">
 					<NavLink to="/">Browse Beers</NavLink>
 				</li>

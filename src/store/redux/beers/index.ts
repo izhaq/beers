@@ -16,7 +16,7 @@ export default Creators;
 const initialState: BeersState = {
 	beers: {
 		data: [],
-		pageSize: 16,
+		pageSize: 26,
 		page: 1,
 		hasMore: true,
 	},
