@@ -27,7 +27,7 @@ const BeerBrowser: React.FC = () => {
 
 	const renderBeerModal = () => {
 		const {
-			name, description, tagline, food_pairing: foodPairing, first_brewed: firstBrewed,
+			name, description, tagline, food_pairing: foodPairing = [], first_brewed: firstBrewed,
 		} = selectedBeer;
 		return (
 			<Modal closeModal={handleClose} showModal={show} header="Beer Information">

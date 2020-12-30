@@ -1,11 +1,12 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
+import './style.scss';
 
 const Navbar: React.FC = () => (
 	<nav>
-		<div className="nav-wrapper cyan darken-1 px1">
+		<div className="nav-wrapper darken-1 px1">
 			<NavLink to="/" className="brand-logo">
-				Redux + TypeScript
+				Beer Buddy
 			</NavLink>
 			<ul className="right hide-on-med-and-down">
 				<li cy-data="home-nav-link">

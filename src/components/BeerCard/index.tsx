@@ -12,7 +12,7 @@ interface Props {
 const BeerCard: React.FC<Props> = (props: Props) => {
 	const { beer: { name }, onClick } = props;
 	return (
-		// eslint-disable-next-line jsx-a11y/click-events-have-key-events
+		// eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions
 		<div className="beer-card card hoverable" onClick={() => onClick()}>
 			<div className="favorite-toggle">
 				<StarToggleButton onClick={() => {}} />
