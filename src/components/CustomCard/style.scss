@@ -1,0 +1,72 @@
+.card-wrapper {
+  padding: 13px 17px 2px 17px;
+  border: 1px solid #e6e6e6;
+  border-radius: 5px;
+
+  &.no-padding {
+    padding: 0 !important;
+  }
+
+  &.selected {
+    border: 1px solid #6B207F;
+    position: relative;
+
+    &:hover {
+      background: hsla(287, 60%, 31%, 0.08);
+      cursor: pointer;
+    }
+
+    &:before {
+      content: "";
+      display: block;
+      position: absolute;
+      width: 16px;
+      height: 16px;
+      top: 16px;
+      left: 12px;
+      background-image: url('../../public/assets/images/v.svg');
+    }
+  }
+
+  &.showCollapse {
+    position: relative;
+
+    &:hover {
+      background: hsla(287, 60%, 31%, 0.08);
+      cursor: pointer;
+    }
+
+    &:before {
+      content: "";
+      display: block;
+      position: absolute;
+      width: 16px;
+      height: 16px;
+      top: 16px;
+      left: 12px;
+      background-image: url('../../public/assets/images/v.svg');
+    }
+  }
+
+  &.showExpand {
+    position: relative;
+
+    &:hover {
+      background: hsla(287, 60%, 31%, 0.08);
+      cursor: pointer;
+    }
+
+    &:before {
+      content: "";
+      display: block;
+      position: absolute;
+      width: 16px;
+      height: 16px;
+      top: 16px;
+      left: 12px;
+      background-image: url('../../public/assets/images/arrow.svg');
+      transform: rotate(180deg);
+    }
+  }
+}
+

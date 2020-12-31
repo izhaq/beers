@@ -2,11 +2,14 @@ import React, { useCallback, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { ActionTypes as actionTypes, Beer } from '../../store/redux/beers/interfaces';
 import {
-	BeerCard, InputSearch, Modal, Pagination,
+	BeerCard,
+	CustomCard, InputSearch, Modal, Pagination,
 } from '../../components';
 import { beersSelector } from '../../store/redux/beers';
 import './style.scss';
 import Details from '../../components/Details';
+import Rating from '@material-ui/lab/Rating';
+import { Container } from 'react-bootstrap';
 
 const BeerBrowser: React.FC = () => {
 	const { selectors: { beers }, actions: { onLoadMoreBeers } } = connect();
@@ -22,7 +25,17 @@ const BeerBrowser: React.FC = () => {
 
 	const renderBeerView = () => {
 		const { data: beerList } = beers;
-		return beerList.map((beer: Beer) => (<BeerCard key={beer.id} beer={beer} onClick={() => handleShow(beer)} />));
+		return beerList.map((beer: Beer) => (
+			<CustomCard key={beer.id} onClick={() => handleShow(beer)}>
+				<Rating
+					name={beer.id.toString()}
+					onChange={(event, newValue) => {
+						console.log(newValue);
+					}}
+				/>
+				<BeerCard beer={beer} onFavoriteChange={(beerItem: Beer) => console.log(beerItem)} />
+			</CustomCard>
+		));
 	};
 
 	const renderBeerModal = () => {
@@ -44,7 +57,7 @@ const BeerBrowser: React.FC = () => {
 	};
 
 	return (
-		<>
+		<Container className="card-browser-container">
 			<div className="card-browser">
 				<div className="search-container">
 					<InputSearch onChange={onSearchQueryChange} />
@@ -56,7 +69,7 @@ const BeerBrowser: React.FC = () => {
 				</div>
 			</div>
 			{renderBeerModal()}
-		</>
+		</Container>
 	);
 };
 

@@ -1,29 +1,22 @@
-.beer-card {
+.beer-container {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: flex-end;
-  width: 180px;
-  height: 250px;
-  background-color: #FFD18D;
-  border-radius: 10px;
+  background-color: #FFF;
   .favorite-toggle{
     width: 100%;
     display: flex;
     justify-content: flex-end;
     padding-right: 12px;
-    i{
-      cursor: pointer;
-      font-size: 40px;
-    }
   }
-  .card-image{
+  .beer-logo{
     border-radius: 10px;
     img{
-      width: 115px;
+      width: 130px;
     }
   }
-  .card-header{
+  .beer-name{
     height: 80px;
     padding: 15px;
     font-family: Garamond, serif;
@@ -31,7 +24,7 @@
     font-weight: 600;
     display: flex;
     justify-content: center;
-    border-top: 1px dashed black;
+    border-top: 1px solid #e6e6e6;
     width: 100%;
   }
 }

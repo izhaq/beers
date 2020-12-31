@@ -25,19 +25,20 @@
   "rules": {
     "no-multiple-empty-lines": ["error", { "max": 1, "maxEOF": 1 }],
     "react/sort-comp": ["off"],
+    "react/display-name": ["off"],
     "react/prefer-stateless-function": ["off"],
+    "no-restricted-syntax": ["off"],
     "import/no-named-as-default": ["off"],
     "arrow-body-style": ["off"],
     "import/order": ["off"],
     "func-names": ["off"],
     "guard-for-in": ["off"],
     "lines-between-class-members": ["off"],
-    "jsx-a11y/label-has-associated-control": ["off"],
     "import/prefer-default-export": "off",
     "import/no-default-export": "off",
     "react/jsx-one-expression-per-line": ["off"],
     "class-methods-use-this": ["off"],
-    "max-len": ["error", { "code": 180 }],
+    "max-len": ["error", { "code": 220 }],
     "@typescript-eslint/explicit-function-return-type": ["off"],
     "@typescript-eslint/no-use-before-define": ["off"],
     "@typescript-eslint/no-explicit-any": ["off"],
@@ -52,6 +53,7 @@
     "react/jsx-indent": ["error", "tab"],
     "@typescript-eslint/indent": ["error", "tab"],
     "comma-dangle": ["error", "only-multiline"],
-    "no-console": 1
+    "no-console": 1,
+    "jsx-a11y/label-has-associated-control": ["off"]
   }
 }

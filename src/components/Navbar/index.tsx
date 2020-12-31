@@ -1,23 +1,22 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
+import { Nav, Navbar } from 'react-bootstrap';
 import './style.scss';
 
-const Navbar: React.FC = () => (
-	<nav>
-		<div className="nav-wrapper darken-1 px1">
-			<NavLink to="/" className="brand-logo">
-				Beer Buddy
-			</NavLink>
-			<ul className="right">
-				<li cy-data="home-nav-link">
-					<NavLink to="/">Browse Beers</NavLink>
-				</li>
-				<li>
-					<NavLink to="/favoritesBeers">Favorite Beers</NavLink>
-				</li>
-			</ul>
-		</div>
-	</nav>
+const NavigationBar: React.FC = () => (
+	<Navbar bg="dark" variant="dark" fixed="top">
+		<Navbar.Brand as={NavLink} to="/">
+			Beer Buddy
+		</Navbar.Brand>
+		<Nav className="mr-auto">
+			<Nav.Link as={NavLink} to="/">
+				Browse Beers
+			</Nav.Link>
+			<Nav.Link as={NavLink} to="/favoritesBeers">
+				Favorite Beers
+			</Nav.Link>
+		</Nav>
+	</Navbar>
 );
 
-export default Navbar;
+export default NavigationBar;

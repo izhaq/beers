@@ -1,4 +1,25 @@
-#search-input{
-  height: inherit;
-  padding-left: 10px;
+.searchInput-container{
+  width: 100%;
+  height: 50px;
+  position: relative;
+  display: flex;
+  font-size: 20px;
+  align-items: center;
+  border-bottom: black solid 1px;
+  #search-input{
+    height: inherit;
+    width: 100%;
+    border: none;
+    padding-right: 30px;
+    &:focus{
+      outline: none;
+    }
+  }
+  .search-logo{
+    position: absolute;
+    right: 0;
+    font-size: 27px;
+    height: 100%;
+  }
 }
+

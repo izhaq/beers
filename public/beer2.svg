@@ -191,7 +191,7 @@ circle[id^="liquid-bubble"]:nth-child(3),  circle[id^="liquid-bubble"]:nth-child
 }
 }
     </style>
-      <rect x="-1" y="-1" fill="#FFD18D" width="153" height="153"/>
+      <rect x="-1" y="-1" fill="#FFF" width="153" height="153"/>
     <g id="beer-foam">
         <path fill="#FFE4C0" stroke="#000000" stroke-miterlimit="10" d="M95.235,47.281c0-3.059-2.48-5.539-5.539-5.539
 		c-0.194,0-0.385,0.01-0.574,0.03c-0.01-4.396-3.575-7.956-7.973-7.956c-1.613,0-3.112,0.483-4.367,1.307
@@ -218,7 +218,7 @@ circle[id^="liquid-bubble"]:nth-child(3),  circle[id^="liquid-bubble"]:nth-child
         <circle id="foam-bubble" fill="#FFFFFF" stroke="#000000" stroke-width="0.5" stroke-miterlimit="10" cx="69.12" cy="40.168" r="0.696"/>
       </g>
     <path id="beer-liquid" fill="#E88F00" d="M96,114c0,0-9,5-26.5,5C54,119,43,114,43,114V47h53V114z"/>
-    <path fill="#FFD18D" d="M99,152H41v-41c0,0,6.5,9,29,9c22,0,29-9,29-9V152z"/>
+    <path fill="#FFF" d="M99,152H41v-41c0,0,6.5,9,29,9c22,0,29-9,29-9V152z"/>
     <g>
         <circle id="liquid-bubble_13_" fill="#FFFFFF" stroke="#000000" stroke-width="0.4" stroke-miterlimit="10" cx="64.492" cy="115.336" r="1.497"/>
         <circle id="liquid-bubble_12_" fill="#FFFFFF" stroke="#000000" stroke-width="0.4" stroke-miterlimit="10" cx="89.492" cy="110.336" r="1.497"/>
