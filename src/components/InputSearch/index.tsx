@@ -12,8 +12,20 @@ interface Props extends React.HTMLProps<HTMLInputElement>{
 }
 
 const InputSearch: React.FC<Props> = (props: Props) => {
-	const { onChange } = props;
-	const { value, onChange: onChangeHandler } = useUserInput('', onChange);
+	const [value, setValue] = useState('');
+
+	const onKeyup = () => {
+		const { onChange } = props;
+		const debounceCallback = handleDebounce(() => {
+			onChange(value);
+		}, 700);
+		debounceCallback();
+	};
+
+	const onChangeValue = (e: any) => {
+		setValue(e.target.value);
+	};
+
 	return (
 		<>
 			<div className="searchInput-container">
@@ -22,7 +34,8 @@ const InputSearch: React.FC<Props> = (props: Props) => {
 					type="text"
 					id="search-input"
 					value={value}
-					onChange={(event) => onChangeHandler(event)}
+					onKeyUp={() => onKeyup()}
+					onChange={onChangeValue}
 				/>
 				<SearchIcon className="search-logo" fontSize="inherit" />
 			</div>
@@ -30,7 +43,7 @@ const InputSearch: React.FC<Props> = (props: Props) => {
 	);
 };
 
-const handleDebounce = (func: any, wait: number, immediate?: boolean) => {
+export const handleDebounce = (func: any, wait: number, immediate?: boolean) => {
 	let timeout: any;
 
 	return () => {
@@ -54,18 +67,6 @@ const handleDebounce = (func: any, wait: number, immediate?: boolean) => {
 			func.apply(this, arguments);
 		}
 	};
-};
-
-export const useUserInput = (defaultValue = '', onChangeHandler: (e: any) => void): { value: string; onChange: (e: any) => void } => {
-	const [value, setValue] = useState(defaultValue);
-	const onChange = (event: any) => {
-		const debounceCallback = handleDebounce(() => {
-			setValue(event.target.value);
-			onChangeHandler(event.target.value.trim());
-		}, 500);
-		debounceCallback();
-	};
-	return { value, onChange };
 };
 
 export default InputSearch;
