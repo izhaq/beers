@@ -1,26 +1,42 @@
 import React from 'react';
 import './style.scss';
+import { Col, Row } from 'react-bootstrap';
 
-export interface Detail {
-	label: string;
-	value: any;
+export enum DetailTypes {
+	STRING = 'STRING',
+	ARRAY = 'ARRAY',
 }
 
-interface Props {
-	data: Array<Detail>;
+export interface Detail<K = any> {
+	label: string;
+	key: keyof K;
+	type?: DetailTypes;
+}
+
+export interface DetailsConfig<T = any>{
+	details: Array<Detail<T>>;
+	data: T;
+}
+
+interface Props{
+	config: DetailsConfig;
 }
 
 const Details: React.FC<Props> = (props: Props) => {
-	const { data } = props;
+	const { config: { data, details } } = props;
+	const getValue = (detail: Detail) => ((detail.type === DetailTypes.ARRAY) ? data[detail.key].join(', ') : data[detail.key]);
+
 	return (
 		// eslint-disable-next-line jsx-a11y/click-events-have-key-events
 		<div className="details-container">
 			{
-				data.map((detail) => (
-					<div key={detail.label} className="row">
-						<strong className="col-auto">{detail.label}</strong>
-						<div className="col-auto">{detail.value}</div>
-					</div>
+				details.map((detail) => (
+					<Row key={detail.label} className="row mt-2">
+						<Col>
+							<strong className="col-auto">{detail.label}</strong>
+							<div className="col-auto">{getValue(detail)}</div>
+						</Col>
+					</Row>
 				))
 			}
 		</div>

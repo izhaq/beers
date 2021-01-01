@@ -12,17 +12,18 @@ export enum ActionTypes {
 }
 
 export interface ActionCreator {
-	setBeers: (beers: Array<Beer>) => SetBeersAction,
+	setBeers: (beers: Array<Beer>, resetPage: boolean) => SetBeersAction,
 	getBeers: (page: number) => GetBeersAction,
 	getFavoriteBeers: () => GetFavoriteBeersAction
 }
 
 export interface SetBeersAction extends Action<ActionTypes.SET_BEERS> {
 	beers: Array<Beer>;
+	resetPage: boolean;
 }
 
 export interface GetBeersAction extends Action<ActionTypes.GET_BEERS> {
-	page: number
+	searchQuery?: string;
 }
 
 export type GetFavoriteBeersAction = Action<ActionTypes.GET_FAVORITE_BEERS>;

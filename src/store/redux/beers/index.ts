@@ -5,8 +5,8 @@ import {
 } from './interfaces';
 
 const { Creators } = createActions<ActionTypes, ActionCreator>({
-	setBeers: ['beers'],
-	getBeers: ['page'],
+	setBeers: ['beers', 'resetPage'],
+	getBeers: ['page'], // handled by saga
 	getFavoriteBeers: [],
 });
 
@@ -31,16 +31,24 @@ export const beersSelector = {
 /* ------------- Reducers ------------- */
 
 const setBeersReducer = (state: BeersState, action: SetBeersAction) => {
-	const { beers: additionalBeers } = action;
+	const { beers: additionalBeers, resetPage } = action;
 	const { beers: { page, data, ...rest } } = state;
-	return additionalBeers.length > 0 ? {
+	const newState = additionalBeers.length > 0 ? {
 		...state,
 		beers: {
-			page: page + 1,
-			data: [...data, ...additionalBeers],
+			page: resetPage ? 1 : page + 1,
+			data: resetPage ? additionalBeers : [...data, ...additionalBeers],
 			...rest,
 		},
-	} : { ...state, beers: { ...state.beers, hasMore: false } };
+	} : {
+		...state,
+		beers: {
+			...state.beers,
+			hasMore: false,
+			data: resetPage ? [] : data,
+		},
+	};
+	return newState;
 };
 
 /* ------------- Hookup Reducers To Types ------------- */

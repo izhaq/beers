@@ -1,1 +1,1 @@
-export { default as BeerBrowser } from './BeerBrowser';
+export { default as BeerBrowser } from './Beers/AllBeerBrowser';

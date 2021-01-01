@@ -7,10 +7,12 @@ import api from '../../../requests';
 import { AxiosResponse } from 'axios';
 
 function* getBeers(action: GetBeersAction) {
-	const { page } = action;
-	const { pageSize } = yield select(beersSelector.beers);
-	const response: AxiosResponse<Array<Beer>> = yield call(api.getBeers, page, pageSize);
-	yield put(beerActions.setBeers(response.data));
+	const { searchQuery } = action;
+	const { pageSize, page: currentPage } = yield select(beersSelector.beers);
+	const page = searchQuery ? 1 : currentPage;
+	const foodQuery = searchQuery ? `&food=${searchQuery}` : '';
+	const response: AxiosResponse<Array<Beer>> = yield call(api.getBeers, page, pageSize, foodQuery);
+	yield put(beerActions.setBeers(response.data, !!searchQuery));
 }
 
 function* watchGetBeers() {
