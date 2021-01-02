@@ -1,12 +1,15 @@
 /* eslint @typescript-eslint/no-var-requires: "off" */
-import { BeersState } from './beers/interfaces';
 import { combineReducers, Reducer } from 'redux';
+import { BeerState } from './beers';
 
 export interface ApplicationState {
-	beers: BeersState
+	beers: BeerState,
 }
 
 /* Create root reducer, containing all features of the application */
 export const rootReducer: Reducer<ApplicationState> = combineReducers<ApplicationState>({
-	beers: require('./beers').reducer,
+	beers: combineReducers<BeerState>({
+		availableBeers: require('./beers/availableBeers').reducer,
+		favoriteBeers: require('./beers/favoriteBeers').reducer,
+	}),
 });

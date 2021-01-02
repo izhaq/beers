@@ -1,34 +1,4 @@
-import { Action } from 'redux';
-import { Pagination } from '../interfaces';
-
-export interface BeersState {
-	beers: Beers;
-}
-
-export enum ActionTypes {
-	GET_BEERS = 'GET_BEERS',
-	SET_BEERS = 'SET_BEERS',
-	GET_FAVORITE_BEERS = 'GET_FAVORITE_BEERS',
-}
-
-export interface ActionCreator {
-	setBeers: (beers: Array<Beer>, resetPage: boolean) => SetBeersAction,
-	getBeers: (page: number) => GetBeersAction,
-	getFavoriteBeers: () => GetFavoriteBeersAction
-}
-
-export interface SetBeersAction extends Action<ActionTypes.SET_BEERS> {
-	beers: Array<Beer>;
-	resetPage: boolean;
-}
-
-export interface GetBeersAction extends Action<ActionTypes.GET_BEERS> {
-	searchQuery?: string;
-}
-
-export type GetFavoriteBeersAction = Action<ActionTypes.GET_FAVORITE_BEERS>;
-
-export interface Beer{
+export interface BaseBeer {
 	id: number;
 	name: string;
 	description: string;
@@ -37,6 +7,17 @@ export interface Beer{
 	food_pairing: Array<string>
 }
 
-export interface Beers extends Pagination{
-	data: Array<Beer>;
+export interface Beer extends BaseBeer{
+	isFavorite: boolean;
+	ranking?: Ranking;
 }
+
+export enum RankingTypes {
+	ONE_START = 1,
+	TWO_STAR,
+	TREE_STAR,
+	FOUR_STAR,
+	FIVE_STAR,
+}
+
+export type Ranking = RankingTypes;

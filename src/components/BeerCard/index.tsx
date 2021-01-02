@@ -1,8 +1,8 @@
 import React from 'react';
-import { Beer } from '../../store/redux/beers/interfaces';
 import './style.scss';
-import beerLogo from '../../public/assets/images/beer2.svg';
-import StarToggle from '../StarToggle';
+import beerLogo from 'public/assets/images/beer2.svg';
+import StarToggle from 'components/StarToggle';
+import { Beer } from 'store/redux/beers/interfaces';
 
 interface Props {
 	beer: Beer;

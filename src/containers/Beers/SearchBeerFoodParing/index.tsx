@@ -1,16 +1,14 @@
-import React from 'react';
-import { InputSearch } from '../../../components';
+import React, { useCallback } from 'react';
+import { InputSearch } from 'components';
 import { Col, Row } from 'react-bootstrap';
 import './style.scss';
-import { ActionTypes as actionTypes } from '../../../store/redux/beers/interfaces';
+import { ActionTypes as actionTypes } from 'store/redux/beers/availableBeers/interfaces';
 import { useDispatch } from 'react-redux';
 
 const SearchBeerFoodParing: React.FC = () => {
 	const dispatch = useDispatch();
-	const getBeersByFoodPairing = (searchQuery: string) => {
-		dispatch({ type: actionTypes.GET_BEERS, searchQuery });
-	};
-	const onSearchQueryChange = (searchQuery: string) => getBeersByFoodPairing(searchQuery);
+	const onSearchQueryChange = useCallback((searchQuery: string) => (
+		dispatch({ type: actionTypes.GET_BEERS, searchQuery })), []);
 
 	return (
 		<Row className="food-paring-search">

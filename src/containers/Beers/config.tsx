@@ -1,9 +1,9 @@
-import Details, { Detail, DetailTypes } from '../components/Details';
-import { Beer } from '../store/redux/beers/interfaces';
-import { Modal } from '../components';
+import Details, { Detail, DetailTypes } from 'components/Details';
+import { Modal } from 'components';
 import React from 'react';
+import { BaseBeer } from 'store/redux/beers/interfaces';
 
-const details: Array<Detail<Beer>> = [
+const details: Array<Detail<BaseBeer>> = [
 	{ label: 'Name', key: 'name' },
 	{ label: 'Description', key: 'description' },
 	{ label: 'Tagline', key: 'tagline' },
@@ -11,7 +11,7 @@ const details: Array<Detail<Beer>> = [
 	{ label: 'First Brewed', key: 'first_brewed' },
 ];
 
-export const beerModal = (closeModalCb: () => void) => (showModal: boolean, data: Beer) => (
+export const beerModal = (closeModalCb: () => void) => (showModal: boolean, data: BaseBeer) => (
 	<Modal closeModal={closeModalCb} showModal={showModal} header="Beer Information">
 		<Details config={{ details, data }} />
 	</Modal>

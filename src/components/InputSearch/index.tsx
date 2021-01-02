@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import SearchIcon from '@material-ui/icons/Search';
+import { debounce } from 'lodash';
 import './style.scss';
 
 /* eslint-disable react/jsx-props-no-spreading */
@@ -13,28 +14,28 @@ interface Props extends React.HTMLProps<HTMLInputElement>{
 
 const InputSearch: React.FC<Props> = (props: Props) => {
 	const [value, setValue] = useState('');
+	const { onChange } = props;
 
-	const onKeyup = () => {
-		const { onChange } = props;
-		const debounceCallback = handleDebounce(() => {
-			onChange(value);
-		}, 700);
-		debounceCallback();
-	};
+	const debounceHandler = useCallback(
+		debounce((search: string) => {
+			onChange(search);
+		}, 700),
+		[],
+	);
 
-	const onChangeValue = (e: any) => {
+	const onChangeValue = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
 		setValue(e.target.value);
-	};
+		debounceHandler(e.target.value);
+	}, []);
 
 	return (
 		<>
 			<div className="searchInput-container">
 				<input
-					placeholder="Search beers here..."
+					placeholder="Search ..."
 					type="text"
 					id="search-input"
 					value={value}
-					onKeyUp={() => onKeyup()}
 					onChange={onChangeValue}
 				/>
 				<SearchIcon className="search-logo" fontSize="inherit" />
@@ -58,9 +59,11 @@ export const handleDebounce = (func: any, wait: number, immediate?: boolean) => 
 
 		const callNow = immediate && !timeout;
 
+		console.log('before clearing timeout : ', timeout);
 		clearTimeout(timeout);
 
 		timeout = setTimeout(later, wait || 0);
+		console.log('after setting new timeout : ', timeout);
 
 		if (callNow) {
 			// @ts-ignore

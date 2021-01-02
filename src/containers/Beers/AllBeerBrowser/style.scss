@@ -14,11 +14,14 @@
       height: calc(100% - 90px);
       padding-left: 20px;
       padding-right: 20px;
+      .margin{
+        margin-bottom: 20px;
+      }
       & > div{
-        display: grid;
+        /*display: grid;
         grid-template-columns: 1fr 1fr 1fr;
         column-gap: 20px;
-        row-gap: 20px;
+        row-gap: 20px;*/
       }
     }
   }
