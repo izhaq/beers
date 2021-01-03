@@ -5,13 +5,13 @@ import {
 	ActionTypes,
 	FavoritesBeersState,
 	ActionCreator,
-	AddFavoriteBeerAction, RemoveFavoriteBeersAction, RemoveAllFavoriteAction, SetBeerRankingAction,
+	AddFavoriteBeerAction, RemoveFavoriteBeersAction, SetBeerRankingAction,
 } from './interfaces';
 import { Beer } from '../interfaces';
 
 const { Creators } = createActions<ActionTypes, ActionCreator>({
-	addFavoriteBeer: ['beer'],
-	removeFavoriteBeer: ['beerId'],
+	addFavoriteBeer: ['beersToAdd'],
+	removeFavoriteBeer: ['beersToRemove'],
 	removeAllFavorites: [],
 	setBeerRanking: ['beerId', 'ranking'],
 });
@@ -25,30 +25,34 @@ const initialState = Immutable<FavoritesBeersState>({
 
 /* ------------- Selectors ------------- */
 
-export const beersSelector = {
+export const favoriteBeersSelector = {
 	beers: (state: ApplicationState) => state.beers.favoriteBeers.beers,
 };
 
 /* ------------- Reducers ------------- */
 
 const addFavoriteBeersReducer = (state: ImmutableObject<FavoritesBeersState>, action: AddFavoriteBeerAction) => {
-	const { beer } = action;
+	const { beersToAdd } = action;
 	const { beers } = state;
-	return state.merge({ beers: beers.concat([beer]) });
+	const newFavoriteBeers = beersToAdd.map((beer) => ({ ...beer, isFavorite: true }));
+	return state.merge({ beers: beers.concat(newFavoriteBeers) });
 };
 
 const removeFavoriteBeersReducer = (state: ImmutableObject<FavoritesBeersState>, action: RemoveFavoriteBeersAction) => {
-	const { beerId } = action;
+	const { beersToRemove } = action;
 	const { beers } = state;
-	return state.merge({ beers: beers.filter((beer: ImmutableObject<Beer>) => beer.id !== beerId) });
+	return state.merge({ beers: beers.filter((beer: ImmutableObject<Beer>) => !beersToRemove.includes(beer.id)) });
 };
 
-const removeAllFavoriteReducer = (state: ImmutableObject<FavoritesBeersState>, action: RemoveAllFavoriteAction) => {
+const removeAllFavoriteReducer = (state: ImmutableObject<FavoritesBeersState>) => {
 	return state.merge({ beers: [] });
 };
 
 const setBeerRankingReducer = (state: ImmutableObject<FavoritesBeersState>, action: SetBeerRankingAction) => {
-	return state.merge({ beers: [] });
+	const { beerId, ranking } = action;
+	const { beers } = state;
+	const beerIndex = beers.findIndex((beer: Beer) => beer.id === beerId);
+	return state.updateIn(['beers', beerIndex, 'ranking'], () => ranking);
 };
 
 /* ------------- Hookup Reducers To Types ------------- */

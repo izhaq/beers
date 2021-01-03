@@ -1,17 +1,22 @@
-import { createReducer, createActions } from 'reduxsauce';
+import { createActions, createReducer } from 'reduxsauce';
 import Immutable, { ImmutableObject } from 'seamless-immutable';
 import { ApplicationState } from 'store/redux';
 import {
-	ActionTypes, AvailableBeersState, ActionCreator, SetBeersAction, UpdateBeerAsFavoriteAction,
+	ActionCreator,
+	ActionTypes,
+	AvailableBeersState,
+	SetBeersAction,
+	UpdateBeersAsFavoriteAction,
 } from './interfaces';
+import { Beer } from '../interfaces';
 
 const { Creators } = createActions<ActionTypes, ActionCreator>({
 	setBeers: ['beers', 'resetPage'],
 	getBeers: ['page'], // handled by saga,
-	updateBeerAsFavorite: ['beerId', 'favorite'],
+	updateBeerAsFavorite: ['beersToUpdate'],
 });
 
-export const BeersTypes = ActionTypes;
+export const AvailableBeersTypes = ActionTypes;
 export default Creators;
 
 const initialState = Immutable<AvailableBeersState>({
@@ -25,7 +30,7 @@ const initialState = Immutable<AvailableBeersState>({
 
 /* ------------- Selectors ------------- */
 
-export const beersSelector = {
+export const availableBeersSelector = {
 	beers: (state: ApplicationState) => state.beers.availableBeers.beers,
 };
 
@@ -50,14 +55,21 @@ const setBeersReducer = (state: ImmutableObject<AvailableBeersState>, action: Se
 		});
 };
 
-const updateBeerAsFavoriteRedicer = (state: ImmutableObject<AvailableBeersState>, action: UpdateBeerAsFavoriteAction) => {
-	const { beerId, favorite } = action;
-	const { beers: { data } } = state;
-	state.updateIn(obj, ['foo', 'bar'], add, 10);
+const updateBeersAsFavoriteReducer = (state: ImmutableObject<AvailableBeersState>, action: UpdateBeersAsFavoriteAction) => {
+	const { beersToUpdate } = action;
+	let newState = state;
+	beersToUpdate.forEach(({ beerId, favorite }: { beerId: number; favorite: boolean }) => {
+		const { beers: { data } } = newState;
+		const beerIndex = data.findIndex((beer: Beer) => beer.id === beerId);
+		const beer = data[beerIndex].updateIn(['isFavorite'], () => favorite);
+		newState = newState.updateIn(['beers', 'data', beerIndex], () => beer);
+	});
+	return newState;
 };
 
 /* ------------- Hookup Reducers To Types ------------- */
 
 export const reducer = createReducer<any, any>(initialState, {
-	[BeersTypes.SET_BEERS]: setBeersReducer,
+	[AvailableBeersTypes.SET_BEERS]: setBeersReducer,
+	[AvailableBeersTypes.UPDATE_BEER_AS_FAVORITE]: updateBeersAsFavoriteReducer,
 });

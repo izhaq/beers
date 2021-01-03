@@ -2,7 +2,8 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { Nav, Navbar } from 'react-bootstrap';
 import './style.scss';
-import { navbarLinks } from './config';
+import { navbarLinks, NavConfig } from './config';
+import { v4 as uniqueId } from 'uuid';
 
 const NavigationBar: React.FC = () => (
 	<Navbar bg="dark" variant="dark" fixed="top" className="navbar-container">
@@ -11,9 +12,9 @@ const NavigationBar: React.FC = () => (
 		</Navbar.Brand>
 		<Nav className="mr-auto">
 			{
-				navbarLinks.map((link) => (
+				navbarLinks.map((link: NavConfig) => (
 					// eslint-disable-next-line react/jsx-key
-					<Nav.Link as={NavLink} to={link.to}>
+					<Nav.Link as={NavLink} to={link.to} key={uniqueId()}>
 						{link.label}
 					</Nav.Link>
 				))

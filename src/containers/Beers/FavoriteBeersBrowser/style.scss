@@ -4,25 +4,27 @@
     height: 100%;
     display: flex;
     flex-direction: column;
-    .search-container{
+    .remove-all-container{
       height: 50px;
       width: 100%;
       margin-bottom: 20px;
       margin-top: 20px;
+      .remove-all-btn{
+        background: #343a40;
+        border-color: #343a40;
+        &:hover{
+          background-color: #4b545c;
+          border-color: #4b545c;
+          outline: none;
+        }
+      }
     }
-    .cards {
+    .favorite-cards {
       height: calc(100% - 90px);
       padding-left: 20px;
       padding-right: 20px;
-      margin-top: 100px;
       .margin{
         margin-bottom: 20px;
-      }
-      & > div{
-        /*display: grid;
-        grid-template-columns: 1fr 1fr 1fr;
-        column-gap: 20px;
-        row-gap: 20px;*/
       }
     }
   }

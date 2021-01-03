@@ -1,6 +1,6 @@
 import RoutesPath from '../../routes/RoutesPath';
 
-interface NavConfig{
+export interface NavConfig{
 	to: string;
 	label: string;
 }

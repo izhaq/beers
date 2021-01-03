@@ -5,16 +5,22 @@ import './style.scss';
 interface Props {
 	marked?: boolean;
 	onClick?: any;
+	id?: any;
 }
 
 const StarToggle: React.FC<Props> = (props: Props) => {
-	const { marked = false, onClick } = props;
+	const { marked = false, onClick, id } = props;
 	const [selected, setSelected] = useState(marked);
+
+	React.useEffect(() => {
+		setSelected(marked);
+	}, [marked]);
+
 	const onToggle = (event: React.MouseEvent<HTMLSpanElement, MouseEvent>) => {
 		event.stopPropagation();
 		setSelected(!selected);
 		if (onClick) {
-			onClick(!selected);
+			onClick(!selected, id);
 		}
 	};
 

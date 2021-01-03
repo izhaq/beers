@@ -1,3 +1,4 @@
+/* eslint-disable react/require-default-props */
 import React from 'react';
 import './style.scss';
 import beerLogo from 'public/assets/images/beer2.svg';
@@ -7,10 +8,13 @@ import { Beer } from 'store/redux/beers/interfaces';
 interface Props {
 	beer: Beer;
 	onFavoriteChange: any;
+	footer?: any;
 }
 
 const BeerCard: React.FC<Props> = (props: Props) => {
-	const { beer, beer: { name }, onFavoriteChange } = props;
+	const {
+		beer, beer: { name, isFavorite }, onFavoriteChange, footer,
+	} = props;
 	const toggleFavorite = (favorite: boolean) => {
 		onFavoriteChange(beer, favorite);
 	};
@@ -19,7 +23,7 @@ const BeerCard: React.FC<Props> = (props: Props) => {
 		// eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions
 		<span className="beer-container">
 			<span className="favorite-toggle">
-				<StarToggle marked={false} onClick={toggleFavorite} />
+				<StarToggle marked={isFavorite} onClick={toggleFavorite} />
 			</span>
 			<span className="beer-logo">
 				<img src={beerLogo} alt="beer" />
@@ -27,6 +31,7 @@ const BeerCard: React.FC<Props> = (props: Props) => {
 			<span className="beer-name">
 				<span>{name}</span>
 			</span>
+			{footer}
 		</span>
 	);
 };

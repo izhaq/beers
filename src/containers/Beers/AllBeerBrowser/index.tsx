@@ -4,9 +4,8 @@ import {
 	BeerCard,
 	CustomCard, Pagination,
 } from 'components';
-import { beersSelector, BeersTypes } from 'store/redux/beers/availableBeers';
+import { availableBeersSelector, AvailableBeersTypes } from 'store/redux/beers/availableBeers';
 import './style.scss';
-import Rating from '@material-ui/lab/Rating';
 import { Row, Col, Container } from 'react-bootstrap';
 import SearchBeerFoodParing from '../SearchBeerFoodParing';
 import { beerModal } from 'containers/Beers/config';
@@ -18,15 +17,15 @@ const BeerBrowser: React.FC = () => {
 		selectors: { beers },
 		actions: { onLoadMoreBeers, updateBeerAsFavorite },
 		local: {
-			selectedBeer, setSelectedBeer, setShow, show,
+			selectedBeer, setSelectedBeer, setShowBeerInfo, showBeerInfo,
 		},
 	} = connect();
 
-	const handleClose = () => setShow(false);
+	const handleClose = () => setShowBeerInfo(false);
 
 	const handleShow = (beer: BaseBeer) => {
 		setSelectedBeer(beer);
-		setShow(true);
+		setShowBeerInfo(true);
 	};
 
 	const renderModal = beerModal(handleClose);
@@ -39,12 +38,6 @@ const BeerBrowser: React.FC = () => {
 					beerList.map((beer: Beer) => (
 						<Col key={beer.id} className="col-lg-3 col-md-4 col-sm-6 margin">
 							<CustomCard onClick={() => handleShow(beer)}>
-								<Rating
-									name={beer.id.toString()}
-									onChange={(event, newValue) => {
-										console.log(newValue);
-									}}
-								/>
 								<BeerCard
 									beer={beer}
 									onFavoriteChange={
@@ -69,36 +62,40 @@ const BeerBrowser: React.FC = () => {
 					</Pagination>
 				</div>
 			</div>
-			{renderModal(show, selectedBeer)}
+			{renderModal(showBeerInfo, selectedBeer)}
 		</Container>
 	);
 };
 
 const connect = () => {
 	const [selectedBeer, setSelectedBeer] = useState({} as BaseBeer);
-	const [show, setShow] = useState(false);
-	const beers = useSelector(beersSelector.beers);
+	const [showBeerInfo, setShowBeerInfo] = useState(false);
+	const beers = useSelector(availableBeersSelector.beers);
 	const { hasMore } = beers;
 	const dispatch = useDispatch();
 
 	return {
 		selectors: {
-			beers: useSelector(beersSelector.beers),
+			beers,
 		},
 		actions: {
-			onLoadMoreBeers: (page: number) => (
-				hasMore && dispatch({ type: BeersTypes.GET_BEERS })
+			onLoadMoreBeers: () => (
+				hasMore && dispatch({ type: AvailableBeersTypes.GET_BEERS })
 			),
-			updateBeerAsFavorite: (beer: Beer, isFavorite: boolean) => (isFavorite
-				? dispatch({ type: FavoriteBeersTypes.ADD_FAVORITE_BEER, beer })
-				: dispatch({ type: FavoriteBeersTypes.REMOVE_FAVORITE_BEER, beerId: beer.id })),
+			updateBeerAsFavorite: (beer: Beer, favorite: boolean) => {
+				if (favorite) {
+					dispatch({ type: FavoriteBeersTypes.ADD_FAVORITE_BEER, beersToAdd: [beer] });
+				} else {
+					dispatch({ type: FavoriteBeersTypes.REMOVE_FAVORITE_BEER, beersToRemove: [beer.id] });
+				}
+				dispatch({ type: AvailableBeersTypes.UPDATE_BEER_AS_FAVORITE, beersToUpdate: [{ beerId: beer.id, favorite }] });
+			},
 		},
 		local: {
-
 			selectedBeer,
 			setSelectedBeer,
-			show,
-			setShow,
+			showBeerInfo,
+			setShowBeerInfo,
 		},
 	};
 };

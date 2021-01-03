@@ -11,6 +11,7 @@ const AppLayout: React.FC<Props> = (props: Props) => {
 	const { children } = props;
 	return (
 		<Container fluid>
+			<div id="confirmation"> </div>
 			<Row className="nav-bar-row">
 				<Col className="col-12">
 					<Navbar />

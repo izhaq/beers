@@ -12,7 +12,7 @@ const details: Array<Detail<BaseBeer>> = [
 ];
 
 export const beerModal = (closeModalCb: () => void) => (showModal: boolean, data: BaseBeer) => (
-	<Modal closeModal={closeModalCb} showModal={showModal} header="Beer Information">
+	<Modal closeModal={closeModalCb} show={showModal} header="Beer Information">
 		<Details config={{ details, data }} />
 	</Modal>
 );

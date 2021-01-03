@@ -1,6 +1,5 @@
 import React, { useCallback, useState } from 'react';
 import SearchIcon from '@material-ui/icons/Search';
-import { debounce } from 'lodash';
 import './style.scss';
 
 /* eslint-disable react/jsx-props-no-spreading */
@@ -16,16 +15,11 @@ const InputSearch: React.FC<Props> = (props: Props) => {
 	const [value, setValue] = useState('');
 	const { onChange } = props;
 
-	const debounceHandler = useCallback(
-		debounce((search: string) => {
-			onChange(search);
-		}, 700),
-		[],
-	);
-
 	const onChangeValue = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
 		setValue(e.target.value);
-		debounceHandler(e.target.value);
+		if (onChange) {
+			onChange(e.target.value);
+		}
 	}, []);
 
 	return (
@@ -42,34 +36,6 @@ const InputSearch: React.FC<Props> = (props: Props) => {
 			</div>
 		</>
 	);
-};
-
-export const handleDebounce = (func: any, wait: number, immediate?: boolean) => {
-	let timeout: any;
-
-	return () => {
-		const later = () => {
-			timeout = null;
-
-			if (!immediate) {
-				// @ts-ignore
-				func.apply(this, arguments);
-			}
-		};
-
-		const callNow = immediate && !timeout;
-
-		console.log('before clearing timeout : ', timeout);
-		clearTimeout(timeout);
-
-		timeout = setTimeout(later, wait || 0);
-		console.log('after setting new timeout : ', timeout);
-
-		if (callNow) {
-			// @ts-ignore
-			func.apply(this, arguments);
-		}
-	};
 };
 
 export default InputSearch;
