@@ -2,7 +2,7 @@
 import React, { useCallback, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import {
-	BeerCard,
+	BeerView,
 	CustomCard, Modal, Ranking,
 } from 'components';
 import { AvailableBeersTypes } from 'store/redux/beers/availableBeers';
@@ -10,26 +10,18 @@ import './style.scss';
 import {
 	Row, Col, Container, Button,
 } from 'react-bootstrap';
-import { beerModal } from 'containers/Beers/config';
 import { favoriteBeersSelector, FavoriteBeersTypes } from 'store/redux/beers/favoriteBeers';
 import { v4 as uniqueId } from 'uuid';
-import { BaseBeer, Beer } from 'store/redux/beers/interfaces';
+import { Beer } from 'store/redux/beers/interfaces';
 
 const FavoriteBeersBrowser: React.FC = () => {
 	const {
 		selectors: { beers },
 		actions: { updateBeerAsFavorite, removeAllFavorites, updateBeerRanking },
 		local: {
-			selectedBeer, setSelectedBeer, setShowBeerInfo, showBeerInfo, showWarning, setShowWarning,
+			showWarning, setShowWarning,
 		},
 	} = connect();
-
-	const onCloseBeerDetailModal = () => setShowBeerInfo(false);
-
-	const onNewBeerDetailsSelected = (beer: BaseBeer) => {
-		setSelectedBeer(beer);
-		setShowBeerInfo(true);
-	};
 
 	const onCloseWarningModal = () => {
 		setShowWarning(false);
@@ -39,8 +31,6 @@ const FavoriteBeersBrowser: React.FC = () => {
 		removeAllFavorites();
 		setShowWarning(false);
 	};
-
-	const onOpenBeerInfoModal = beerModal(onCloseBeerDetailModal);
 
 	const onOpenWarningModal = () => {
 		return (
@@ -63,8 +53,8 @@ const FavoriteBeersBrowser: React.FC = () => {
 				{
 					beers.map((beer: Beer) => (
 						<Col key={uniqueId()} className="col-lg-3 col-md-4 col-sm-6 margin">
-							<CustomCard onClick={() => onNewBeerDetailsSelected(beer)}>
-								<BeerCard
+							<CustomCard>
+								<BeerView
 									beer={beer}
 									onFavoriteChange={(beerItem: Beer) => updateBeerAsFavorite(beerItem.id)}
 								/>
@@ -97,7 +87,6 @@ const FavoriteBeersBrowser: React.FC = () => {
 					{renderBeerView()}
 				</div>
 			</div>
-			{onOpenBeerInfoModal(showBeerInfo, selectedBeer)}
 			{onOpenWarningModal()}
 		</Container>
 	);
@@ -105,8 +94,6 @@ const FavoriteBeersBrowser: React.FC = () => {
 
 const connect = () => {
 	const beersSelector = useSelector(favoriteBeersSelector.beers);
-	const [selectedBeer, setSelectedBeer] = useState({} as BaseBeer);
-	const [showBeerInfo, setShowBeerInfo] = useState(false);
 	const [showWarning, setShowWarning] = useState(false);
 	const dispatch = useDispatch();
 
@@ -128,7 +115,7 @@ const connect = () => {
 			}, []),
 		},
 		local: {
-			selectedBeer, setSelectedBeer, showBeerInfo, setShowBeerInfo, showWarning, setShowWarning,
+			showWarning, setShowWarning,
 		},
 	};
 };
