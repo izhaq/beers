@@ -5,7 +5,7 @@ import './style.scss';
 import beerLogo from 'public/assets/images/beer2.svg';
 import StarToggle from 'components/StarToggle';
 import { Beer } from 'store/redux/beers/interfaces';
-import { beerModal } from '../../containers/Beers/config';
+import { beerModal } from './config';
 
 interface Props {
 	beer: Beer;

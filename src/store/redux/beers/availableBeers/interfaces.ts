@@ -10,21 +10,25 @@ export enum ActionTypes {
 	GET_BEERS = 'GET_BEERS',
 	SET_BEERS = 'SET_BEERS',
 	UPDATE_BEER_AS_FAVORITE = 'UPDATE_BEER_AS_FAVORITE',
+	GET_BEERS_BY_QUERY = 'GET_BEERS_BY_QUERY',
 }
 
 export interface ActionCreator {
-	setBeers: (beers: Array<Beer>, resetPage: boolean) => SetBeersAction,
+	setBeers: (beers: Array<Beer>, hasMore: boolean) => SetBeersAction,
 	getBeers: (page: number) => GetBeersAction,
-	updateBeerAsFavorite: (beersToUpdate: Array<{beerId: number; favorite: boolean;}>) => UpdateBeersAsFavoriteAction,
+	getBeersByQuery: (searchQuery: string) => GetBeersByQueryAction,
+	updateBeerAsFavorite: (beersToUpdate: Array<{beerId: number; favorite: boolean}>) => UpdateBeersAsFavoriteAction,
 }
 
 export interface SetBeersAction extends Action<ActionTypes.SET_BEERS> {
 	beers: Array<Beer>;
-	resetPage: boolean;
+	hasMore: boolean;
 }
 
-export interface GetBeersAction extends Action<ActionTypes.GET_BEERS> {
-	searchQuery?: string;
+export type GetBeersAction = Action<ActionTypes.GET_BEERS>;
+
+export interface GetBeersByQueryAction extends Action<ActionTypes.GET_BEERS> {
+	searchQuery: string;
 }
 
 export interface UpdateBeersAsFavoriteAction extends Action<ActionTypes.UPDATE_BEER_AS_FAVORITE> {

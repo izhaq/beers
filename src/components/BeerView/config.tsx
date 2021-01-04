@@ -1,5 +1,5 @@
 import Details, { Detail, DetailTypes } from 'components/Details';
-import { Modal } from 'components';
+import { Modal } from 'components/index';
 import React from 'react';
 import { BaseBeer } from 'store/redux/beers/interfaces';
 
